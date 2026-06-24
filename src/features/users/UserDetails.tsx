@@ -57,7 +57,7 @@ const UserDetails = () => {
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Selected</p>
           <h3 className="text-2xl font-bold text-white">{user.name}</h3>
-          <p className="text-sm text-slate-300">@{user.username}</p>
+          <p className="text-sm text-slate-300">{user.email}</p>
         </div>
         <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs text-emerald-100">
           Cached
@@ -66,25 +66,19 @@ const UserDetails = () => {
 
       <dl className="mt-5 space-y-3 text-sm text-slate-200">
         <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
+          <dt className="text-slate-400">ID</dt>
+          <dd className="font-semibold">{user.id}</dd>
+        </div>
+        <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
           <dt className="text-slate-400">Email</dt>
           <dd className="font-semibold">{user.email}</dd>
         </div>
-        <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
-          <dt className="text-slate-400">Phone</dt>
-          <dd className="font-semibold">{user.phone}</dd>
-        </div>
-        <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
-          <dt className="text-slate-400">Company</dt>
-          <dd className="font-semibold">{user.company.name}</dd>
-        </div>
-        <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
-          <dt className="text-slate-400">Website</dt>
-          <dd className="font-semibold">{user.website}</dd>
-        </div>
-        <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
-          <dt className="text-slate-400">City</dt>
-          <dd className="font-semibold">{user.address.city}</dd>
-        </div>
+        {user.createdAt ? (
+          <div className="flex justify-between rounded-xl bg-white/5 px-3 py-2">
+            <dt className="text-slate-400">Joined</dt>
+            <dd className="font-semibold">{new Date(user.createdAt).toLocaleDateString()}</dd>
+          </div>
+        ) : null}
       </dl>
     </div>
   )

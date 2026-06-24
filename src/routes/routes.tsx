@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from 'react'
 import DashboardPage from '../pages/DashboardPage'
 import LoginPage from '../pages/LoginPage'
+import UsersPage from '../pages/UsersPage'
 import MasterModulePage from '../pages/MasterModulePage'
 import DesignModulePage from '../pages/DesignModulePage'
 import ProductionModulePage from '../pages/ProductionModulePage'
@@ -29,6 +30,13 @@ export const routes: RouteConfig[] = [
     id: 'dashboard',
     path: AppPaths.dashboard,
     Component: DashboardPage,
+    Guard: ProtectedRoute,
+    layoutType: 1,
+  },
+  {
+    id: 'users',
+    path: AppPaths.users,
+    Component: UsersPage,
     Guard: ProtectedRoute,
     layoutType: 1,
   },

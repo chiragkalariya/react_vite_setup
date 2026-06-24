@@ -32,8 +32,8 @@ const LoginPage = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [email, setEmail] = useState('admin@korkeila.app')
-  const [password, setPassword] = useState('password')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
@@ -60,35 +60,24 @@ const LoginPage = () => {
     setBusy(true)
     setMessage(null)
 
-    let token = 'demo-session-token'
-    let resolvedName = email
-
     try {
-      const response = await apiClient.post('admin/login', { email, password })
-      const data = response?.data ?? null
-      token =
-        data?.authToken ??
-        data?.token ??
-        data?.accessToken ??
-        data?.access_token ??
-        token
-      resolvedName = data?.username ?? data?.userName ?? data?.email ?? email
-    } catch (error: unknown) {
-      const data = (error as { response?: { data?: unknown } })?.response?.data ?? null
-      const errorMessage =
-        (data as { message?: string })?.message ??
-        (data as { error?: string })?.error ??
-        (typeof data === 'string' ? data : null) ??
-        'Login failed. Using demo session.'
-      setMessage(errorMessage)
-    } finally {
+      const { data } = await apiClient.post('/api/auth/login', { email, password })
+      const user = data?.user
+
       dispatch(
         setCredentials({
-          token,
-          user: { name: resolvedName, email },
+          token: 'cookie',
+          user: {
+            name: user?.name ?? email,
+            email: user?.email ?? email,
+          },
         }),
       )
       navigate(nextPath, { replace: true })
+    } catch (error: unknown) {
+      const err = error as { message?: string }
+      setMessage(err?.message ?? 'Invalid email or password.')
+    } finally {
       setBusy(false)
     }
   }

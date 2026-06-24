@@ -4,6 +4,7 @@ export type NavItem = {
   icon?: string
   badge?: string
   description?: string
+  children?: NavItem[]
 }
 
 export type NavGroup = {
@@ -115,12 +116,28 @@ export const modulesNavigation: ModuleNav[] = [
 export const indexNavGroups: NavGroup[] = [
   {
     title: 'Modules',
-    items: modulesNavigation.map((module) => ({
-      label: module.name,
-      path: pathFor(module.id),
-      icon: module.icon,
-      description: module.description,
-    })),
+    items: [
+      {
+        label: 'Branch Management',
+        path: '/dashboard/branch-management',
+        icon: '🏢',
+        description: 'Manage branches and users',
+        children: [
+          {
+            label: 'Users',
+            path: pathFor('users'),
+            icon: '👥',
+            description: 'View and manage users',
+          },
+        ],
+      },
+      ...modulesNavigation.map((module) => ({
+        label: module.name,
+        path: pathFor(module.id),
+        icon: module.icon,
+        description: module.description,
+      })),
+    ],
   },
 ]
 

@@ -1,5 +1,3 @@
-import UsersSection from '../features/users/UsersSection'
-
 const DashboardPage = () => {
   return (
     <div className="space-y-6">
@@ -13,7 +11,13 @@ const DashboardPage = () => {
           duplicate fetches.
         </p>
       </section>
-      <UsersSection />
+
+      <section className="glass-card p-6">
+        <h2 className="text-lg font-semibold text-white">Overview</h2>
+        <p className="mt-2 text-sm text-slate-300">
+          Open Branch Management in the sidebar and select Users to manage your team.
+        </p>
+      </section>
     </div>
   )
 }
